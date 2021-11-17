@@ -8,12 +8,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://SreeChakram:stylishstar12@cluster0.negwz.mongodb.net/TodoApp?retryWrites=true&w=majority",{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(()=>console.log("connected to MONGODB"))
-.catch(console.error);
+const CONNECTION_URL="mongodb+srv://SreeChakram:stylishstar12@cluster0.negwz.mongodb.net/TodoApp?retryWrites=true&w=majority";
+const PORT = process.env.PORT || 3001;
+
+mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+  .catch((error) => console.log(`${error} did not connect`));
 
 
 const Todo= require("./models/Todo");
@@ -61,4 +61,4 @@ app.put('/todo/update/:id', async (req, res) => {
 });
 
 
-app.listen(3001, ()=>console.log("server started on 3001"));
+// app.listen(3001, ()=>console.log("server started on 3001"));
